@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de IMC</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Histórico de IMC</h1>
+        
+        <% if (typeof user !== 'undefined' && user) { %>
+            <div class="user-info">
+                <h2>Usuário: <%= user.name %></h2>
+                <p>Email: <%= user.email %></p>
+            </div>
+        <% } else { %>
+            <form id="user-form">
+                <div class="form-group">
+                    <label for="userId">ID do Usuário:</label>
+                    <input type="text" id="userId" name="userId" required>
+                </div>
+                <button type="submit">Buscar Histórico</button>
+            </form>
+        <% } %>
+        
+        <% if (history && history.length > 0) { %>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Altura (m)</th>
+                        <th>Peso (kg)</th>
+                        <th>IMC</th>
+                        <th>Classificação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% history.forEach(record => { %>
+                        <tr>
+                            <td><%= new Date(record.measure_date).toLocaleDateString() %></td>
+                            <td><%= record.height %></td>
+                            <td><%= record.weight %></td>
+                            <td><%= record.bmi_value.toFixed(2) %></td>
+                            <td><%= getBMIClassification(record.bmi_value) %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="no-history">Nenhum registro encontrado.</p>
+        <% } %>
+        
+        <a href="/" class="calculator-link">Voltar para Calculadora</a>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('user-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const userId = document.getElementById('userId').value;
+                    window.location.href = `/history?userId=${userId}`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

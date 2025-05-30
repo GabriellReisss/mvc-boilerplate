@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de IMC</h1>
+        
+        <form id="bmi-form">
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="height">Altura (m):</label>
+                <input type="number" id="height" name="height" step="0.01" min="0.1" max="3" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="weight">Peso (kg):</label>
+                <input type="number" id="weight" name="weight" step="0.1" min="1" max="500" required>
+            </div>
+            
+            <button type="submit">Calcular IMC</button>
+        </form>
+        
+        <div id="result" class="hidden">
+            <h2>Resultado:</h2>
+            <p>Seu IMC é: <span id="bmi-value"></span></p>
+            <p>Classificação: <span id="bmi-classification"></span></p>
+        </div>
+        
+        <a href="/history" class="history-link">Ver Histórico</a>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('bmi-form');
+            const resultDiv = document.getElementById('result');
+            const bmiValue = document.getElementById('bmi-value');
+            const bmiClassification = document.getElementById('bmi-classification');
+            
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const height = parseFloat(document.getElementById('height').value);
+                const weight = parseFloat(document.getElementById('weight').value);
+                
+                try {
+                    const response = await fetch('/api/bmi/calculate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name, email, height, weight })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Erro ao calcular IMC');
+                    }
+                    
+                    // Exibir resultado
+                    const bmi = data.bmi.value;
+                    bmiValue.textContent = bmi.toFixed(2);
+                    bmiClassification.textContent = getBMIClassification(bmi);
+                    resultDiv.classList.remove('hidden');
+                    
+                    // Adicionar link para o histórico do usuário
+                    const historyLink = document.querySelector('.history-link');
+                    historyLink.href = `/history?userId=${data.user.user_id}`;
+                    
+                } catch (error) {
+                    alert('Erro: ' + error.message);
+                    console.error(error);
+                }
+            });
+            
+            function getBMIClassification(bmi) {
+                if (bmi < 18.5) return 'Abaixo do peso';
+                if (bmi < 25) return 'Peso normal';
+                if (bmi < 30) return 'Sobrepeso';
+                if (bmi < 35) return 'Obesidade Grau I';
+                if (bmi < 40) return 'Obesidade Grau II';
+                return 'Obesidade Grau III';
+            }
+        });
+    </script>
+</body>
+</html>

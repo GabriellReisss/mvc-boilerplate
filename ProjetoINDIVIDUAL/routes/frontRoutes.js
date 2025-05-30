@@ -1,22 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
+const bmiController = require('../controllers/bmiController');
 
-// Roteamento para páginas dinâmicas
+// Rota para a página inicial - renderiza diretamente calculator.ejs
 router.get('/', (req, res) => {
-  res.render(path.join(__dirname, '../views/layout/main'), {
-    pageTitle: 'Página Inicial',
-    content: path.join(__dirname, '../views/pages/page1')
-  });
+  res.render('calculator');
 });
 
-router.get('/about', (req, res) => {
-  res.render(path.join(__dirname, '../views/layout/main'), {
-    pageTitle: 'Página Inicial',
-    content: path.join(__dirname, '../views/pages/page2')
-  });
-});
-
-// Adicione outras rotas conforme necessário
+// Rotas para visualização
+router.get('/bmi', bmiController.showCalculator);
+router.get('/history', bmiController.showHistory);
 
 module.exports = router;
