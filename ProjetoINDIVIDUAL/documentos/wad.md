@@ -4,12 +4,12 @@
 Gabriel Andrei dos Reis
 
 ## 1. Introdução
-A aplicação web tem como objetivo calcular o Índice de Massa Corporal (IMC) de um usuário a partir de dados de altura e peso. O sistema permite o cadastro de usuários, bem como o registro de entradas de altura e de peso por usuário, armazenando essas informações em um banco de dados. A arquitetura da aplicação segue o padrão MVC, utilizando Node.js com o framework Express.js e EJS.
+&ensp;A aplicação web tem como objetivo calcular o Índice de Massa Corporal (IMC) de um usuário a partir de dados de altura e peso. O sistema permite o cadastro de usuários, bem como o registro de entradas de altura e de peso por usuário, armazenando essas informações em um banco de dados. A arquitetura da aplicação segue o padrão MVC, utilizando Node.js com o framework Express.js e EJS.
 
 ## 2. Arquitetura do Sistema
 
 ### 2.1 Visão Geral
-A aplicação segue o padrão de arquitetura MVC (Model-View-Controller), que separa a lógica de negócios da interface do usuário, permitindo desenvolvimento, manutenção e evolução independentes.
+&ensp;A aplicação segue o padrão de arquitetura MVC (Model-View-Controller), que separa a lógica de negócios da interface do usuário, permitindo desenvolvimento, manutenção e evolução independentes.
 
 ### 2.2 Componentes Principais
 1. **Model (Modelos)**: Representam a estrutura de dados e a lógica de negócios
@@ -78,7 +78,7 @@ A aplicação segue o padrão de arquitetura MVC (Model-View-Controller), que se
 ## 4. API e Endpoints
 
 ### 4.1 API REST
-A aplicação expõe uma API REST para interação com o frontend e possíveis integrações com outros sistemas.
+&ensp;A aplicação expõe uma API REST para interação com o frontend e possíveis integrações com outros sistemas.
 
 #### Endpoints de Usuários
 | Método | Endpoint | Descrição |
@@ -129,4 +129,4 @@ A aplicação expõe uma API REST para interação com o frontend e possíveis i
 - Carregamento assíncrono de recursos
 
 ## 7. Conclusão
-A Calculadora de IMC proporciona uma maneira simples e eficiente para os usuários calcularem e acompanharem seu Índice de Massa Corporal ao longo do tempo. A arquitetura MVC proporciona uma base sólida para manutenção e expansão futura do sistema.
+&ensp;A Calculadora de IMC proporciona uma maneira simples e eficiente para os usuários calcularem e acompanharem seu Índice de Massa Corporal ao longo do tempo. A arquitetura MVC proporciona uma base sólida para manutenção e expansão futura do sistema.
