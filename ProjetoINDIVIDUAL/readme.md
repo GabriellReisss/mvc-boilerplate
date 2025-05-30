@@ -1,7 +1,7 @@
 # Calculadora de IMC
 
 ## Descrição do Projeto
-Esta aplicação web foi desenvolvida com Node.js, Express.js e EJS seguindo o padrão de arquitetura MVC (Model-View-Controller). O sistema permite calcular o Índice de Massa Corporal (IMC) dos usuários e mantém um histórico de medições. A base de dados PostgreSQL armazena informações do usuário, registros de altura e peso, garantindo o acompanhamento do histórico de cada usuário.
+&ensp;Esta aplicação web foi desenvolvida com Node.js, Express.js e EJS seguindo o padrão de arquitetura MVC (Model-View-Controller). O sistema permite calcular o Índice de Massa Corporal (IMC) dos usuários e mantém um histórico de medições. A base de dados PostgreSQL armazena informações do usuário, registros de altura e peso, garantindo o acompanhamento do histórico de cada usuário.
 
 ## Funcionalidades
 - Cadastro e identificação de usuários por email
