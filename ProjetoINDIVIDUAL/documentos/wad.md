@@ -9,31 +9,83 @@ Gabriel Andrei dos Reis
 ## 2. Arquitetura do Sistema
 
 ### 2.1 Visão Geral
-&ensp;A aplicação segue o padrão de arquitetura MVC (Model-View-Controller), que separa a lógica de negócios da interface do usuário, permitindo desenvolvimento, manutenção e evolução independentes.
+&ensp;A aplicação segue o padrão de arquitetura MVC (Model-View-Controller), que separa a lógica de negócios da interface do usuário, permitindo desenvolvimento, manutenção e evolução independentes. O sistema utiliza uma arquitetura em camadas distribuída conforme demonstrado no diagrama abaixo:
 
-### 2.2 Componentes Principais
-1. **Model (Modelos)**: Representam a estrutura de dados e a lógica de negócios
-   - userModel.js: Gerencia dados de usuários
-   - measurementModel.js: Gerencia dados de medições (altura, peso e IMC)
+![Diagrama de Arquitetura](../assets/arquitetura.jpg)
 
-2. **View (Visualizações)**: Interface com o usuário usando EJS
-   - calculator.ejs: Formulário para cálculo de IMC
-   - history.ejs: Visualização do histórico de medições
-   - error.ejs: Página de erros
+### 2.2 Detalhamento da Arquitetura
 
-3. **Controller (Controladores)**: Gerenciam fluxo de dados e ações do usuário
-   - userController.js: Gerencia operações relacionadas a usuários
-   - bmiController.js: Gerencia cálculos e histórico de IMC
+#### 2.2.1 Frontend (Parte Visual)
+- **Tecnologia**: EJS para criar as páginas
+- **O que tem**: 
+  - Páginas HTML organizadas
+  - CSS para deixar bonito
+  - JavaScript para interações
+- **O que faz**:
+  - Mostra as páginas para o usuário
+  - Verifica se os dados estão corretos
+  - Comunicação com o backend
 
-4. **Camadas Adicionais**:
-   - Routes: Definem as rotas da aplicação
-   - Services: Encapsulam lógica de negócios reutilizável
-   - Config: Configurações da aplicação
+#### 2.2.2 Backend (Servidor)
+- **Tecnologia**: Node.js com Express
+- **Atributos da aplicação**:
+  - Server.js - arquivo principal
+  - Middlewares para processar requisições
+  - Sistema de rotas organizado
+
+#### 2.2.3 Organização MVC
+
+**Models (Dados)**:
+- `userModel.js` - usa os dados de usuários
+- `measurementModel.js` - usa os dados de altura, peso e IMC
+- Se conectam com o banco PostgreSQL
+
+**Views (Telas)**:
+- `calculator.ejs` - tela da calculadora
+- `history.ejs` - tela do histórico
+- `error.ejs` - tela de erro
+
+**Controllers (Lógica)**:
+- `userController.js` - cuida dos usuários
+- `bmiController.js` - cuida dos cálculos de IMC
+- Comunicação entre as telas e os dados
+
+**Services (Regras de Negócio)**:
+- `userService.js` - regras específicas dos usuários
+
+#### 2.2.4 Banco de Dados
+- **Sistema**: PostgreSQL
+- **Como funciona**: Pool de conexões para ser mais rápido
+- **Estrutura**: 4 tabelas conectadas
+- **Segurança**: Proteção contra ataques SQL
+
+### 2.3 Como os Dados Circulam
+
+#### 2.3.1 No cálculo de IMC
+1. Usuário preenche o formulário
+2. Tela envia os dados para o servidor
+3. Rota direciona para o controller certo
+4. Controller valida e processa os dados
+5. Model salva no banco de dados
+6. Resultado volta para a tela
+7. Usuário vê o resultado
+
+#### 2.3.2 Erro
+- Sistema captura erros em todas as partes
+- Mostra mensagens claras para o usuário
+- Registra erros para correção
+
+### 2.4 Performance e Crescimento
+
+#### 2.4.1 performance
+- **Conexões do Banco**: Reutiliza conexões
+- **Consultas**: Otimizadas para serem rápidas
+- **Código**: Bem organizado em módulos
 
 ## 3. Banco de Dados
 
 ### 3.1 Modelagem do Banco de Dados
-![Diagrama](/assets/DBdiagram.png)
+![Diagrama da base de dados](../assets/DBdiagram.png)
 
 ### 3.2 Estrutura das Tabelas
 
