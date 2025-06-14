@@ -80,46 +80,54 @@ A implementação segue rigorosamente o padrão MVC:
 
 ## 3. Principais Desafios Enfrentados e Soluções
 
-### 3.1 Configuração do Ambiente de Desenvolvimento
-**Desafio**: Configuração inicial do ambiente Node.js com PostgreSQL e gerenciamento de dependências.
+### 3.1 Problemas Técnicos de Configuração e Estrutura
+**Desafio**: Durante o desenvolvimento, enfrentei diversos problemas técnicos que impediram o funcionamento inicial da aplicação, incluindo conflitos de declaração de variáveis, problemas com renderização de views e configurações incorretas do servidor.
 
-**Solução**: 
-- Utilização do `package.json` para gerenciamento automatizado de dependências
-- Configuração de variáveis de ambiente com `dotenv` para maior segurança
-- Criação de scripts automatizados para inicialização do banco de dados
+**Contexto dos Problemas**:
+- Erro crítico "Identifier 'pool' has already been declared" devido a múltiplas exportações no mesmo arquivo
+- Erro "Failed to lookup view" ao tentar renderizar páginas EJS, mesmo com servidor rodando
+- Arquivos CSS não sendo carregados corretamente pela aplicação
+- Estrutura de pastas e arquivos mal organizada
 
-### 3.2 Implementação do Padrão MVC
-**Desafio**: Manter a separação clara de responsabilidades entre as camadas da aplicação.
+**Soluções Implementadas**:
+- **Reorganização da arquitetura de arquivos**: Separação clara entre configurações, models e controllers
+- **Correção do sistema de exports/imports**: Cada arquivo passou a exportar apenas um objeto específico
+- **Configuração adequada do EJS**: Setup correto do view engine no servidor Express
+- **Estruturação de arquivos estáticos**: Organização da pasta `public/css/` para servir estilos corretamente
+- **Criação de estrutura MVC consistente**: Definição clara de responsabilidades para cada camada
 
-**Solução**:
-- Criação de uma estrutura de pastas bem definida
-- Implementação de classes específicas para cada Model
-- Controllers focados apenas na lógica de controle de fluxo
-- Views dedicadas exclusivamente à apresentação
+### 3.2 Integração Frontend-Backend
+**Desafio**: Implementar comunicação eficiente entre o frontend JavaScript e a API REST, com tratamento adequado de erros e boa experiência do usuário.
 
-### 3.3 Integração Frontend-Backend
-**Desafio**: Implementar comunicação assíncrona eficiente entre as interfaces e a API.
+**Contexto do Problema**:
+- Necessidade de enviar dados do formulário para o servidor de forma assíncrona
+- Tratamento de diferentes tipos de resposta (sucesso, erro, validação)
+- Fornecer feedback visual adequado para o usuário
 
-**Solução**:
-- Utilização da Fetch API para requisições AJAX
-- Implementação de tratamento de erros robusto
-- Feedback visual adequado para o usuário durante operações
+**Soluções Implementadas**:
+- **Fetch API**: Comunicação assíncrona moderna entre frontend e backend
+- **Tratamento de erros**: Try/catch implementado para capturar e exibir erros
+- **Validação de dados**: Verificação tanto no cliente quanto no servidor
+- **Feedback visual**: Mensagens claras de erro e confirmações de sucesso
 
-### 3.4 Modelagem de Dados Relacional
-**Desafio**: Criar um modelo de dados que permita rastreamento histórico eficiente.
+### 3.3 Modelagem e Organização de Dados para Funcionalidades Complexas
+**Desafio**: Criar uma estrutura de banco de dados que suportasse o histórico de medições de IMC de forma eficiente, mantendo a integridade dos dados e permitindo consultas otimizadas, enquanto organizava o código seguindo o padrão MVC.
 
-**Solução**:
-- Normalização adequada das tabelas
-- Uso de chaves estrangeiras para manter integridade referencial
-- Indexação implícita para otimizar consultas de histórico
+**Contexto do Problema**:
+- Necessidade de armazenar múltiplas medições por usuário ao longo do tempo
+- Relacionamentos complexos entre usuários, altura, peso e cálculos de IMC
+- Manutenção da separação de responsabilidades entre Models, Views e Controllers
+- Otimização de consultas para exibição de histórico personalizado
 
-### 3.5 Gerenciamento de Estados e Erros
-**Desafio**: Manter consistência de dados e tratar adequadamente situações de erro.
-
-**Solução**:
-- Implementação de validações tanto no frontend quanto no backend
-- Sistema de tratamento de exceções em todas as camadas
-- Mensagens de erro claras e informativas para o usuário
+**Soluções Implementadas**:
+- **Normalização adequada do banco**: Tabelas separadas para usuários, altura, peso e IMC com relacionamentos bem definidos
+- **Implementação de chaves estrangeiras**: Garantia de integridade referencial e consistência dos dados
+- **Arquitetura MVC bem estruturada**: 
+  - Models focados em acesso a dados e regras de negócio
+  - Controllers gerenciando apenas fluxo de dados
+  - Views dedicadas exclusivamente à apresentação
+- **Consultas SQL otimizadas**: JOINs eficientes para recuperar histórico completo do usuário
+- **Camada de Services**: Lógica de negócio mais complexa separada em serviços reutilizáveis
 
 ## 4. Aprendizados e Reflexões
 
@@ -160,11 +168,6 @@ A implementação segue rigorosamente o padrão MVC:
 - **Autenticação**: Implementação de sistema de login e sessões de usuário
 - **Autorização**: Controle de acesso baseado em papéis
 - **Notificações**: Sistema de alertas e notificações para usuários
-
-#### Técnicas
-- **Testes**: Implementação de testes unitários e de integração
-- **Logging**: Sistema de logs mais abrangente para monitoramento
-- **Cache**: Implementação de cache para melhoria de performance
 
 #### Interface
 - **Responsividade**: Melhoria do design para dispositivos móveis
